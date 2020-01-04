@@ -428,7 +428,7 @@ function generateSpell() {
                     difficulty++;
             }
             if (document.getElementById("cur_mis_use").checked) {
-                other += "When target makes a check, change one setback die to a face displaying a <span class='f'></span>. "
+                other += "When target makes a check, change one <span class='sb'></span> to a face displaying a <span class='f'></span>. "
                 if (!document.getElementById("cur_mis_free").checked)
                     difficulty++;
             }
