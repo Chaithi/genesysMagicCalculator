@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+      <script src="https://kit.fontawesome.com/436371529c.js"></script>
+    <title>Genesys Magic Generator</title>
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Genesys Magic Calculator</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.twitter.com/the_chaithi" target="_blank" role="button">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/Chaithi" target="_blank" role="button">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <form>
+      <h3>Characteristics</h3>
+      <div class="form-row">
+        <div class="col">
+          <p>INT</p>
+        </div>
+        <div class="col">
+          <p>WIL</p>
+        </div>
+        <div class="col">
+          <p>CUN</p>
+        </div>
+        <div class="col">
+          <p>PRS</p>
+        </div>
+        <div class="col">
+          <p>Knowledge</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="int">
+        </div>
+        <div class="col">
+          <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="wil">
+        </div>
+        <div class="col">
+          <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="cun">
+        </div>
+        <div class="col">
+          <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="prs">
+        </div>
+        <div class="col">
+          <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="knl">
+        </div>
+      </div>
+        <h4>Spell Features</h4>
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Spell Name</span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Spell Name" aria-label="Spell Name" aria-describedby="spell-name" id="name">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Implement Attack Increase</span>
+                  </div>
+                  <input type="number" min="0" max="5" step="1" class="form-control" placeholder="0" value="0" aria-label="Implement Attack Increase" aria-describedby="implement-attack" id="imp_atk">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Spell Difficulty Mod</span>
+                  </div>
+                  <input type="number" min="-5" max="5" step="1" class="form-control" placeholder="0" value="0" aria-label="Spell Difficulty Modifier" aria-describedby="spell-diff-mod" id="diff_mod">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        <div class="form-row">
+            <div class="col">
+                <h3>Magic Skill</h3>
+                <div class="btn-group" role="group" aria-label="Magic Skills">
+                  <button type="button" class="btn btn-primary" onclick="showType(arcana)">Arcana</button>
+                  <button type="button" class="btn btn-light" onclick="showType(divine)">Divine</button>
+                  <button type="button" class="btn btn-danger" onclick="showType(primal)">Primal</button>
+                  <button type="button" class="btn btn-dark" onclick="showType(runes)">Runes</button>
+                  <button type="button" class="btn btn-info" onclick="showType(verse)">Verse</button>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Spell Type</h3>
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="arcana">
+                    <h4>Arcana:</h4><br />
+                  <button type="button" class="btn btn-danger" onclick="showSpell(attack)">Attack</button>
+                  <button type="button" class="btn btn-light" onclick="showSpell(barrier)">Barrier</button>
+                  <button type="button" class="btn btn-outline-success" onclick="showSpell(conjure)">Conjure</button>
+                  <button type="button" class="btn btn-dark" onclick="showSpell(curse)">Curse</button>
+                  <button type="button" class="btn btn-outline-primary" onclick="showSpell(dispel)">Dispel</button>
+                  <button type="button" class="btn btn-secondary" onclick="showSpell(mask)">Mask</button>
+                  <button type="button" class="btn btn-outline-dark" onclick="showSpell(predict)">Predict</button>
+                  <button type="button" class="btn btn-info" onclick="showSpell(utility)">Utility</button>
+                </div>
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="divine">
+                  <h4>Divine:</h4><br />
+                    <button type="button" class="btn btn-danger" onclick="showSpell(attack)">Attack</button>
+                  <button type="button" class="btn btn-secondary" onclick="showSpell(augment)">Augment</button>
+                  <button type="button" class="btn btn-light" onclick="showSpell(barrier)">Barrier</button>
+                  <button type="button" class="btn btn-dark" onclick="showSpell(curse)">Curse</button>
+                  <button type="button" class="btn btn-warning" onclick="showSpell(heal)">Heal</button>
+                  <button type="button" class="btn btn-outline-dark" onclick="showSpell(predict)">Predict</button>    
+                  <button type="button" class="btn btn-info" onclick="showSpell(utility)">Utility</button>
+                </div>
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="primal">
+                  <h4>Primal:</h4><br />
+                    <button type="button" class="btn btn-danger" onclick="showSpell(attack)">Attack</button>
+                  <button type="button" class="btn btn-secondary" onclick="showSpell(augment)">Augment</button>
+                  <button type="button" class="btn btn-outline-success" onclick="showSpell(conjure)">Conjure</button>
+                  <button type="button" class="btn btn-warning" onclick="showSpell(heal)">Heal</button>
+                  <button type="button" class="btn btn-secondary" onclick="showSpell(transform)">Transform</button>
+                  <button type="button" class="btn btn-info" onclick="showSpell(utility)">Utility</button>
+                </div>
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="runes">
+                  <h4>Runes:</h4><br />
+                    <button type="button" class="btn btn-danger" onclick="showSpell(attack)">Attack</button>
+                  <button type="button" class="btn btn-secondary" onclick="showSpell(augment)">Augment</button>
+                  <button type="button" class="btn btn-light" onclick="showSpell(barrier)">Barrier</button>
+                  <button type="button" class="btn btn-dark" onclick="showSpell(curse)">Curse</button>
+                  <button type="button" class="btn btn-info" onclick="showSpell(utility)">Utility</button>
+                </div>
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="verse">
+                  <h4>Utility:</h4><br />
+                    <button type="button" class="btn btn-secondary" onclick="showSpell(augment)">Augment</button>
+                  <button type="button" class="btn btn-dark" onclick="showSpell(curse)">Curse</button>
+                  <button type="button" class="btn btn-outline-primary" onclick="showSpell(dispel)">Dispel</button>
+                  <button type="button" class="btn btn-warning" onclick="showSpell(heal)">Heal</button>
+                  <button type="button" class="btn btn-info" onclick="showSpell(utility)">Utility</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-9">
+            <div class="container d-none" id="attack">
+                <h4>Attack</h4>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_blast_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_blast_use"> Add
+                    </label>
+                    <label><b>Blast</b>: Attack gains Blast <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_close_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_close_use"> Add
+                    </label>
+                    <label><b>Close Combat</b>: May select a target you are Engaged with. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_dead_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_dead_use"> Add
+                    </label>
+                    <label><b>Deadly</b>: Attack gains Critical rating of 2. The attack also gains Vicious <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_fire_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_fire_use"> Add
+                    </label>
+                    <label><b>Fire</b>: Attack gains Burn <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle divine" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_holy_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_holy_use"> Add
+                    </label>
+                    <label><b>Holy/Unholy</b>: Each <span class="s"></span> deals 2 damage instead of 1 (on GM approval). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_ice_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_ice_use"> Add
+                    </label>
+                    <label><b>Ice</b>: Attack gains Ensnare <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_imp_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_imp_use"> Add
+                    </label>
+                    <label><b>Impact</b>: Attack gains Knockdown quality. Also gains Disorient <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_lig_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_lig_use"> Add
+                    </label>
+                    <label><b>Lightning</b>: Attack gains Auto-fire quality. Also gains Stun <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle arcana" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_man_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_man_use"> Add
+                    </label>
+                    <label><b>Manipulative</b>: Spend <span class="as"></span> to move target one range band in any direction. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle primal" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_nl_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="atk_nl_use"> Add
+                    </label>
+                    <label><b>Non-lethal</b>: Attack gains Stun Damage quality. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_des_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_des_use"> Add
+                    </label>
+                    <label><b>Destructive</b>: Attack gains Sunder quality. Also gains Pierce <span class="knl"></span>. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_emp_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_emp_use"> Add
+                    </label>
+                    <label><b>Empowered</b>: Base damage is doubled. If Blast is added, affects characters within short range. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="atk_psn_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="atk_psn_use"> Add
+                    </label>
+                    <label><b>Poisonous</b>: If attack deals damage, target makes a <b>Hard</b> (<span class="ddd"></span>) Resilience check or suffers <span class="knl"></span> wounds and <span class="knl"></span> strain. +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="augment">
+                <h4>Augment</h4><br />
+                <div class="btn-group-toggle divine" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="aug_dh_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="aug_dh_use"> Add
+                    </label>
+                    <label><b>Divine Health</b>: Target increases wound threshold by <span class="knl"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input  type="checkbox" id="aug_has_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_has_use"> Add
+                    </label>
+                    <label><b>Haste</b>: Target may use a 2nd maneuver without spending strain. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle primal" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="aug_pf_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="aug_pf_use"> Add
+                    </label>
+                    <label><b>Primal Fury</b>: Target deals <span class="knl"></span> extra damage to unarmed combat checks. Also, critical rating for unarmed becomes 3. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_rng4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_rng4_use"> Add
+                    </label>
+                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_swft_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_swft_use"> Add
+                    </label>
+                    <label><b>Swift</b>: Target ignores effects of difficult terrain and cannot be immobilized. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="aug_at_use"> Add
+                    </label>
+                    <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="barrier">
+                <h4>Barrier</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_at_use"> Add
+                    </label>
+                    <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_rng4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_rng4_use"> Add
+                    </label>
+                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_def_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_def_use"> Add
+                    </label>
+                    <label><b>Add Defense</b>: Target gains melee and ranged defense of <span class="knl"></span>. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_emp_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="bar_emp_use"> Add
+                    </label>
+                    <label><b>Empowered</b>: Barrier reduces additional damage per <span class="s"></span> (instead of <span class="ss"></span>). +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle arcana" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="bar_ref_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="bar_ref_use"> Add
+                    </label>
+                    <label><b>Reflection</b>: If attacked by magic that generates <span class="ttt"></span> or <span class="de"></span>, after check is resolved, attacker suffers the same damage back. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle divine" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="bar_snc_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="bar_snc_use"> Add
+                    </label>
+                    <label><b>Sanctuary</b>: Targets antithesis of target's faith or deity automatically disengage and cannot engage the target. +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="conjure">
+                <h4>Conjure</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_as_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_as_use"> Add
+                    </label>
+                    <label><b>Additional Summon</b>: Summons an additional summon. May summon an additional per <span class="adad"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_med_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_med_use"> Add
+                    </label>
+                    <label><b>Medium Summon</b>: Summon a more complicated tool, a two-handed weapon, or rival. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_rng4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_rng4_use"> Add
+                    </label>
+                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_sa_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_sa_use"> Add
+                    </label>
+                    <label><b>Summon Ally</b>: Creature summoned is friendly and obeys their commands. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_grn_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_grn_use"> Add
+                    </label>
+                    <label><b>Grand Summon</b>: Summon a more complicated tool, a two-handed weapon, or rival up to Silhouette 3. +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="curse">
+                <h4>Curse</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_ene_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_ene_use"> Add
+                    </label>
+                    <label><b>Enervate</b>: If target suffers a strain, they suffer 1 additional strain. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_mis_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_mis_use"> Add
+                    </label>
+                    <label><b>Misfortune</b>: May select a target you are Engaged with. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_at_use"> Add
+                    </label>
+                    <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle divine" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="cur_des_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="cur_des_use"> Add
+                    </label>
+                    <label><b>Despair</b>: Target's wound and strain thresholds are reduced by <span class="knl"></span>. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle arcana" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm typed">
+                        <input class="typed" type="checkbox" id="cur_doom_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm typed">
+                        <input class="typed" type="checkbox" id="cur_doom_use"> Add
+                    </label>
+                    <label><b>Doom</b>: After target makes a check, you may change any one die in their pool not displaying <span class="tr"></span> or <span class="de"></span> to another face. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_par_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="cur_par_use"> Add
+                    </label>
+                    <label><b>Paralyzed</b>: Target is staggered. (May not be used with additional target. +<span class="ddd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="dispel">
+                <h4>Dispel</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="dis_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="dis_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="dis_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="dis_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="dis_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="dis_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="dis_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="dis_at_use"> Add
+                    </label>
+                    <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="heal">
+                <h4>Heal</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_rng4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_rng4_use"> Add
+                    </label>
+                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_at_use"> Add
+                    </label>
+                    <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_res_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_res_use"> Add
+                    </label>
+                    <label><b>Restoration</b>: Select an ongoing status effect on your target. This status effect immediately ends. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_crt_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_crt_use"> Add
+                    </label>
+                    <label><b>Heal Critical</b>: Select one Critical Injury the target is suffering. The critical Injury is also healed. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_ri_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_ri_use"> Add
+                    </label>
+                    <label><b>Revive Incapacitated</b>: You may target characters that are incapacitated. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="hea_rez_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="hea_rez_use"> Add
+                    </label>
+                    <label><b>Resurrection</b>: You may target a character who died during this encounter. If successful, target is restored to life with wounds equal to their wound threshold. If failed, no other attempts may be made to resurrect the target. +<span class="dddd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="mask">
+                <h4>Mask</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_blur_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_blur_use"> Add
+                    </label>
+                    <label><b>Blur</b>: An illusion on a character causes any attacks made against them to add <span class="t"></span> to the results. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_mi_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_mi_use"> Add
+                    </label>
+                    <label><b>Mirror Image</b>: An illusion on a character allows the character to spend <span class="ttt"></span> or <span class="de"></span> from any combat check against them to have the attack harmlessly hit a mirror image instead. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_at_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_at_use"> Add
+                    </label>
+                    <label><b>Additional Illusion</b>: Affects an additional target or creates an additional illusion within range. May spend each <span class="adad"></span> to affect an additional target or create another illusion. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rng1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_rng1_use"> Add
+                    </label>
+                    <label><b>Range 1</b>: Increase range of illusions to Medium and targeted creatures to Short. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rng2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_rng2_use"> Add
+                    </label>
+                    <label><b>Range 2</b>: Increase range of illusions to Long and targeted creatures to Medium (Must also select Range 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rng3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_rng3_use"> Add
+                    </label>
+                    <label><b>Range 3</b>: Increase range of illusions to Extreme and targeted creatures to Long (Must also select Range 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rng4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_rng4_use"> Add
+                    </label>
+                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_size1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_size1_use"> Add
+                    </label>
+                    <label><b>Size 1</b>: May affect creatures and create illusions of Silhouette 2. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_size2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_size2_use"> Add
+                    </label>
+                    <label><b>Size 2</b>: May affect creatures and create illusions of Silhouette 3. (Must also select Size 1). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_size3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_size3_use"> Add
+                    </label>
+                    <label><b>Size 3</b>: May affect creatures and create illusions of Silhouette 4. (Must also select Size 1 and 2). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_size4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_size4_use"> Add
+                    </label>
+                    <label><b>Size 4</b>: May affect creatures and create illusions of Silhouette 5. (Must also select Size 1, 2, and 3). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rea_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_rea_use"> Add
+                    </label>
+                    <label><b>Realism</b>: Increase difficulty checks to determine the illusion is fake by one. May spend <span class="adad"></span> to increase an additional one. Also fools smell, taste, and touch. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_trr_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_trr_use"> Add
+                    </label>
+                    <label><b>Terror</b>: Those who spot the illusion must make a <b>Hard</b> (<span class="ddd"></span>) Discipline check. Suffer 2 strain per <span class="t"></span>. If failed, they are unable to approach the illusion. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_inv_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="mas_inv_use"> Add
+                    </label>
+                    <label><b>Invisibility</b>: If targeting a creature, that creature is rendered invisible. +<span class="ddd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="predict">
+                <h4>Predict</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_qr_use"> Add
+                    </label>
+                    <label><b>Quicksilver Reflexes</b>: Instead of asking a question, add <span class="ss"></span> to the results of your next Iniative check. +0 Difficulty
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="pre_scr_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_scr_use"> Add
+                    </label>
+                    <label><b>Scry</b>: Instead of asking a question, you may learn the location of one silhouette 0 item within long range. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="pre_emp_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_emp_use"> Add
+                    </label>
+                    <label><b>Empowered</b>: You may ask a question about events within the next month instead. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="pre_aq_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_aq_use"> Add
+                    </label>
+                    <label><b>Additional Questions</b>: May ask an additional question. May gain an additional question for every <span class="adad"></span>. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="pre_fop_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_fop_use"> Add
+                    </label>
+                    <label><b>Flash of Precognition</b>: Once before the end of the current encounter, you may add <span class="s"></span> to the results of one of your checks. You may also add <span class="f"></span> to the results of a check targeting you. You may spend <span class="adadad"></span> on the spell cast to increase this to <span class="ss"></span> or <span class="ff"></span> instead. +<span class="dd"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="pre_cd_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="pre_cd_use"> Add
+                    </label>
+                    <label><b>Cheat Death</b>: Once before the end of the session, when character would otherwise be incapacitated or killed, you may spend a Story Point to instead suffer wounds and strain equal to your wound and strain thresholds (but not exceeding it). +<span class="dd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="transform">
+                <h4>Transform</h4><br />
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_si1_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_si1_use"> Add
+                    </label>
+                    <label><b>Silhouette Increase 1</b>: Transform into an animal of Silhouette 1. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_si2_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_si2_use"> Add
+                    </label>
+                    <label><b>Silhouette Increase 2</b>: Transform into an animal of Silhouette 2 (Rank 1 required). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_si3_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_si3_use"> Add
+                    </label>
+                    <label><b>Silhouette Increase 3</b>: Transform into an animal of Silhouette 3 (Rank 1 and 2 required). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_si4_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_si4_use"> Add
+                    </label>
+                    <label><b>Silhouette Increase 4</b>: Transform into an animal of Silhouette 4 (Rank 1, 2 and 3 required). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_si5_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_si5_use"> Add
+                    </label>
+                    <label><b>Silhouette Increase 5</b>: Transform into an animal of Silhouette 5 (Rank 1, 2, 3, and 4 required). +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_cr_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_cr_use"> Add
+                    </label>
+                    <label><b>Characteristic Retention</b>: Retain your own Intellect and Willpower. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_tg_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_tg_use"> Add
+                    </label>
+                    <label><b>Transform Gear</b>: Worn gear change into natural markings instead of being dropped. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_df_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_df_use"> Add
+                    </label>
+                    <label><b>Dire Form</b>: Adopt a dire form of the chosen animal. Increase damage of natural weapons by 3, soak by 1, wound threshold by 6, and silhouette by 1. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="tra_cow_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="tra_cow_use"> Add
+                    </label>
+                    <label><b>Curse of the Wild</b>: Instead of transforming yourself, you may transform one target within short range into a silhouette 0 animal of your choice. +<span class="ddd"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="container d-none" id="utility">
+                <h4>Utility</h4><br />
+            </div>
+            
+        </div>
+        <div class="col-3">
+            <div class="container" id="spell">
+        
+            </div>
+        </div>
+      </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+</script>
+  </body>
+</html>
