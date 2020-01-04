@@ -797,5 +797,5 @@ class UIDError extends Error {
     }
 }
 
-window.addEventListener("click", generateSpell);
+window.addEventListener("mousedown", generateSpell);
 window.addEventListener("keypress", generateSpell);
