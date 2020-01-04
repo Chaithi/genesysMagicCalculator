@@ -797,5 +797,5 @@ class UIDError extends Error {
     }
 }
 
-window.addEventListener("mousedown", generateSpell);
+Array.from(document.getElementsByClassName("btn-sm")).forEach(el => el.onchange = generateSpell);
 window.addEventListener("keypress", generateSpell);
