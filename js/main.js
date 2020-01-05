@@ -237,6 +237,7 @@ function generateSpell() {
                 default:
                     break;
             }
+            damage += imp_atk;
             if (document.getElementById("atk_blast_use").checked) {
                 qualities += "Blast " + knl + "; ";
                 if(!document.getElementById("atk_blast_free").checked)
@@ -777,7 +778,6 @@ function generateSpell() {
             break;
     }
     difficulty += diff_mod;
-    damage += imp_atk;
     if (spell_name != "")
         spell_string += "<h5><i>" + spell_name +"</i></h5>";
     spell_string += "<i>" + chosen_skill + " - " + chosen_spell + "</i>";
@@ -881,4 +881,4 @@ class UIDError extends Error {
 }
 
 Array.from(document.getElementsByClassName("btn-sm")).forEach(el => el.onchange = generateSpell);
-window.addEventListener("keypress", generateSpell);
+Array.from(document.getElementsByClassName("form-control")).forEach(el => el.onchange = generateSpell);
