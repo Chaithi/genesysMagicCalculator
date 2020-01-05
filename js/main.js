@@ -862,23 +862,6 @@ function checkDifficulty(num) {
     }
 }
 
-/**
- * Generates a unique ID
- */
-function uniqueID() {
-    return '_' + Math.random().toString(36).substr(2, 9);
-}
-
-
-
-
-//ERRORS
-class UIDError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = "UIDError";
-    }
-}
-
+// Event Handlers
 Array.from(document.getElementsByClassName("btn-sm")).forEach(el => el.onchange = generateSpell);
 Array.from(document.getElementsByClassName("form-control")).forEach(el => el.onchange = generateSpell);
