@@ -237,7 +237,6 @@ function generateSpell() {
                 default:
                     break;
             }
-            damage += imp_atk;
             if (document.getElementById("atk_blast_use").checked) {
                 qualities += "Blast " + knl + "; ";
                 if(!document.getElementById("atk_blast_free").checked)
@@ -777,6 +776,7 @@ function generateSpell() {
         default:
             break;
     }
+    damage += imp_atk;
     difficulty += diff_mod;
     if (spell_name != "")
         spell_string += "<h5><i>" + spell_name +"</i></h5>";
@@ -862,6 +862,5 @@ function checkDifficulty(num) {
     }
 }
 
-// Event Handlers
 Array.from(document.getElementsByClassName("btn-sm")).forEach(el => el.onchange = generateSpell);
 Array.from(document.getElementsByClassName("form-control")).forEach(el => el.onchange = generateSpell);
