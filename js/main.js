@@ -3,10 +3,10 @@
  *
  * Provides players a way to build spells.
  *
- * @link   https://gsc.gamergadgets.net
+ * @link   https://gmc.gamergadgets.net
  * @author Robert Thayer.
  * @since  01.03.2020
- * @version 0.1a
+ * @version 0.2a
  */
 
 let int_ = document.getElementById("int"),
@@ -37,20 +37,43 @@ let int_ = document.getElementById("int"),
     spellTypes = ["arcana", "divine", "primal", "runes", "verse"],
     spells = [attack, augment, barrier, conjure, curse, dispel, heal, mask, predict, transform, utility],
     spellDiv = document.getElementById("spell"),
-    ATK_BASE = 1,
-    AUG_BASE = 2,
-    BAR_BASE = 1,
-    CON_BASE = 1,
-    CUR_BASE = 2,
-    DIS_BASE = 3,
-    HEA_BASE = 1,
-    MAS_BASE = 1,
-    PRE_BASE = 2,
-    TRA_BASE = 2,
-    UTI_BASE = 1,
+    concDiv = document.getElementById("concentrating"),
+    concentrating = false,
     chosen_skill = "",
     chosen_spell = "";
-    
+const ATK_BASE = 1,
+      ATK_RNG = "Short",
+      ATK_CONC = false,
+      AUG_BASE = 2,
+      AUG_RNG = "Engaged",
+      AUG_CONC = true,
+      BAR_BASE = 1,
+      BAR_RNG = "Engaged",
+      BAR_CONC = true,
+      CON_BASE = 1,
+      CON_RNG = "Engaged",
+      CON_CONC = true,
+      CUR_BASE = 2,
+      CUR_RNG = "Short",
+      CUR_CONC = true,
+      DIS_BASE = 3,
+      DIS_RNG = "Short",
+      DIS_CONC = false,
+      HEA_BASE = 1,
+      HEA_RNG = "Engaged",
+      HEA_CONC = false,
+      MAS_BASE = 1,
+      MAS_RNG = "Short/Engaged",
+      MAS_CONC = true,
+      PRE_BASE = 2,
+      PRE_RNG = "",
+      PRE_CONC = false,
+      TRA_BASE = 2,
+      TRA_RNG = "",
+      TRA_CONC = true,
+      UTI_BASE = 1,
+      UTI_RNG = "",
+      UTI_CONC = false;
 
 function showType(type) {
     types.forEach(div => div.classList.add("d-none"));
@@ -84,7 +107,7 @@ function showType(type) {
         default:
             break;
     }
-
+    generateSpell();
 }
 
 function showSpell(spell) {
@@ -127,6 +150,23 @@ function showSpell(spell) {
         default:
             break;
     }
+    generateSpell();
+}
+
+function multiCheck(sp, type, num) {
+    let checked = false;
+    for (i = num; i > 0; i--) {
+        let el = sp + "_" + type + i + "_use";
+        document.getElementById(el).disabled = false;
+        if (checked) {
+            document.getElementById(el).checked = true;
+            document.getElementById(el).disabled = true;
+            document.getElementById(el).parentElement.classList.add("active");
+            
+        }
+        if (document.getElementById(el).checked)
+            checked = true;
+    }
 }
 
 function generateSpell() {
@@ -144,7 +184,8 @@ function generateSpell() {
         range = "",
         other = "",
         sil = -1,
-        spell_string = "";
+        spell_string = "",
+        concentration = false;
     if (int_.value != "")
         int = parseInt(int_.value);
     else
@@ -177,8 +218,9 @@ function generateSpell() {
     Array.from(document.getElementsByClassName("knl")).forEach(el => el.innerHTML = knl);
     switch (chosen_spell) {
         case "attack":
-            range = "Short";
+            range = ATK_BASE;
             difficulty = ATK_BASE;
+            concentration = ATK_CONC;
             switch (chosen_skill) {
                 case "arcana":
                     damage = int;
@@ -215,7 +257,9 @@ function generateSpell() {
                 if (!document.getElementById("atk_fire_free").checked)
                     difficulty++;
             }
-            if (document.getElementById("atk_holy_use").checked & !document.getElementById("atk_holy_free").checked) {
+            if (document.getElementById("atk_holy_use").checked) {
+                other += "Each <span class='s'></span> deals 2 damage instead of 1 if target is antithesis to your diety. ";
+                if (!document.getElementById("atk_holy_free").checked)
                     difficulty++;
             }
             if (document.getElementById("atk_ice_use").checked) {
@@ -233,7 +277,9 @@ function generateSpell() {
                 if (!document.getElementById("atk_lig_free").checked)
                     difficulty++;
             }
-            if (document.getElementById("atk_man_use").checked & !document.getElementById("atk_man_free").checked) {
+            if (document.getElementById("atk_man_use").checked) {
+                other += "May spend <span class='ad' to move target one range band in any direction. ";
+                if (!document.getElementById("atk_man_free").checked)
                     difficulty++;
             }
             if (document.getElementById("atk_nl_use").checked) {
@@ -241,6 +287,7 @@ function generateSpell() {
                 if (!document.getElementById("atk_nl_free").checked)
                     difficulty++;
             }
+            multiCheck("atk", "rng", 3);
             if (document.getElementById("atk_rng1_use").checked) {
                 range = "Medium";
                 if (!document.getElementById("atk_rng1_free").checked)
@@ -274,8 +321,9 @@ function generateSpell() {
             }
             break;
         case "augment":
-            range = "Engaged";
+            range = AUG_RNG;
             difficulty = AUG_BASE;
+            concentration = AUG_CONC;
             other += "Target increases the ability of any skill checks by one. ";
             if (document.getElementById("aug_dh_use").checked) {
                 other += "Target increases wound threshold by " + knl + ". ";
@@ -292,6 +340,7 @@ function generateSpell() {
                 if (!document.getElementById("aug_pf_free").checked)
                     difficulty++;
             }
+            multiCheck("aug", "rng", 4);
             if (document.getElementById("aug_rng1_use").checked) {
                 range = "Short";
                 if (!document.getElementById("aug_rng1_free").checked)
@@ -324,7 +373,8 @@ function generateSpell() {
             }
             break;
         case "barrier":
-            range = "Engaged";
+            range = BAR_RNG;
+            concentration = BAR_CONC;
             difficulty = BAR_BASE;
             if (document.getElementById("bar_emp_use").checked) {
                 other += "Reduce incoming damage by one, plus one for every <span class='s'></span>. ";
@@ -337,6 +387,7 @@ function generateSpell() {
                 if (!document.getElementById("bar_at_free").checked)
                     difficulty++;
             }
+            multiCheck("bar", "rng", 4);
             if (document.getElementById("bar_rng1_use").checked) {
                 range = "Short";
                 if (!document.getElementById("bar_rng1_free").checked)
@@ -374,7 +425,8 @@ function generateSpell() {
             }
             break;
         case "conjure":
-            range = "Engaged";
+            range = CON_RNG;
+            concentration = CON_CONC;
             difficulty = CON_BASE;
             other = "Summons a simple tool, one-handed melee weapon, or minion (silhouette 1). "
             if (document.getElementById("con_med_use").checked) {
@@ -392,6 +444,7 @@ function generateSpell() {
                 if (!document.getElementById("con_as_free").checked)
                     difficulty++;
             }
+            multiCheck("con", "rng", 4);
             if (document.getElementById("con_rng1_use").checked) {
                 range = "Short";
                 if (!document.getElementById("con_rng1_free").checked)
@@ -420,7 +473,8 @@ function generateSpell() {
             break;
         case "curse":
             difficulty = CUR_BASE;
-            range = "Short";
+            range = CUR_RNG;
+            concentration = CON_CONC;
             other = "Target decreases the ability of any skill checks made by one. ";
             if (document.getElementById("cur_ene_use").checked) {
                 other += "If target suffers strain, they suffer 1 additional strain. "
@@ -432,6 +486,7 @@ function generateSpell() {
                 if (!document.getElementById("cur_mis_free").checked)
                     difficulty++;
             }
+            multiCheck("cur", "rng", 3);
             if (document.getElementById("cur_rng1_use").checked) {
                 range = "Medium";
                 if (!document.getElementById("cur_rng1_free").checked)
@@ -470,8 +525,10 @@ function generateSpell() {
             break;
         case "dispel":
             difficulty = DIS_BASE;
-            range = "Short";
+            range = DIS_RNG;
+            concentration = CON_CONC;
             other = "All magical effects the target is under end immediately. "
+            multiCheck("dis", "rng", 3);
             if (document.getElementById("dis_rng1_use").checked) {
                 range = "Medium";
                 if (!document.getElementById("dis_rng1_free").checked)
@@ -495,13 +552,15 @@ function generateSpell() {
             break;
         case "heal":
             difficulty = HEA_BASE;
-            range = "Engage";
+            range = HEA_RNG;
+            concentration = HEA_CONC;
             other = "Target recovers 1 wound per uncanceled <span class='s'></span> and 1 strain per uncanceled <span class='ad'></span>. ";
             if (document.getElementById("hea_at_use").checked) {
                 other += "Affects an additional target within range. May spend each <span class='ad'></span> to affect an additional target. ";
                 if (!document.getElementById("hea_at_free").checked)
                     difficulty++;
             }
+            multiCheck("hea", "rng", 4);
             if (document.getElementById("hea_rng1_use").checked) {
                 range = "Short";
                 if (!document.getElementById("hea_rng1_free").checked)
@@ -545,8 +604,10 @@ function generateSpell() {
             break;
         case "mask":
             difficulty = MAS_BASE;
-            range = "Short / Engaged";
+            range = MAS_RNG;
+            concentration = MAS_CONC;
             other = "Create an illusion of an object or creature (Silhouette 1 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 1 or smaller). ";
+            multiCheck("mas", "size", 4);
             if (document.getElementById("mas_size1_use").checked) {
                 other = "Create an illusion of an object or creature (Silhouette 2 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 2 or smaller). ";
                 if (!document.getElementById("mas_size1_free").checked)
@@ -577,12 +638,12 @@ function generateSpell() {
                 if (!document.getElementById("mas_mi_free").checked)
                     difficulty++;
             }
-            
             if (document.getElementById("mas_at_use").checked) {
                 other += "Affects an additional target or creates another illusion within range. May spend each <span class='adad'></span> to affect an additional target or create an additional illusion. ";
                 if (!document.getElementById("mas_at_free").checked)
                     difficulty++;
             }
+            multiCheck("mas", "rng", 4);
             if (document.getElementById("mas_rng1_use").checked) {
                 range = "Medium / Short";
                 if (!document.getElementById("mas_rng1_free").checked)
@@ -621,6 +682,8 @@ function generateSpell() {
             break;
         case "predict":
             difficulty = PRE_BASE;
+            range = PRE_RNG;
+            concentration = PRE_CONC;
             other = "You may ask a question about events that will unfold within the next 24 hours. ";
             if (document.getElementById("pre_emp_use").checked) {
                 other = "You may ask a question about events that will unfold within the next month. ";
@@ -652,8 +715,11 @@ function generateSpell() {
             break;
         case "transform":
             difficulty = TRA_BASE;
+            range = TRA_RNG;
+            concentration = TRA_CONC;
             sil = 0;
-            other = "Transform into an animal. "
+            other = "Transform into an animal. ";
+            multiCheck("tra", "si", 5);
             if (document.getElementById("tra_si1_use").checked) {
                 sil++;
                 if (!document.getElementById("tra_si1_free").checked)
@@ -703,6 +769,8 @@ function generateSpell() {
             break;
         case "utility":
             difficulty = UTI_BASE;
+            range = UTI_RNG;
+            concentration = UTI_CONC;
             other = "Do something minor, such as levitate a book, transmute a pebble into a butterfly...something cool with a minor benefit!";
             break;
         default:
@@ -713,6 +781,7 @@ function generateSpell() {
     if (spell_name != "")
         spell_string += "<h5><i>" + spell_name +"</i></h5>";
     spell_string += "<i>" + chosen_skill + " - " + chosen_spell + "</i>";
+    spell_string += "<br /><b>Concentration</b>: " + (concentration ? 'Yes' : 'No');
     spell_string += "<br/ ><b>Difficulty</b>: " + checkDifficulty(difficulty);
     if (chosen_spell == "attack")
         spell_string += "<br /><b>Damage</b>: " + damage;
@@ -724,8 +793,22 @@ function generateSpell() {
         spell_string += "<br /><b>Silhouette</b>: " + sil;
     if (other != "")
         spell_string += "<br /><b>Other</b>: " + other;
+    if (concentration) {
+        spell_string += "<br /><button type='button' class='btn btn-primary' onclick='concentrate()'>Concentrate</button>";
+    }
     spellDiv.innerHTML = spell_string;
     dice();
+}
+
+function concentrate() {
+    concDiv.innerHTML = "<h5>Concentrating on:</h5>";
+    concDiv.innerHTML += spellDiv.innerHTML;
+    concDiv.removeChild(concDiv.lastElementChild);
+    concDiv.innerHTML += "<br /><button type='button' class='btn btn-danger' onclick='stopConc()'>Stop Concentrating</button>";
+}
+
+function stopConc() {
+    concDiv.innerHTML = "";
 }
 
 function dice() {
@@ -734,9 +817,9 @@ function dice() {
     Array.from(document.getElementsByClassName("aaa")).forEach(el => el.innerHTML = '<img src="img/aaa.png">');
     Array.from(document.getElementsByClassName("aaaa")).forEach(el => el.innerHTML = '<img src="img/aaaa.png">');
     Array.from(document.getElementsByClassName("aaaaa")).forEach(el => el.innerHTML = '<img src="img/aaaaa.png">');
-    Array.from(document.getElementsByClassName("ad")).forEach(el => el.innerHTML = '<img src="img/ad.png">');
-    Array.from(document.getElementsByClassName("adad")).forEach(el => el.innerHTML = '<img src="img/adad.png">');
-    Array.from(document.getElementsByClassName("adadad")).forEach(el => el.innerHTML = '<img src="img/adadad.png">');
+    Array.from(document.getElementsByClassName("ad")).forEach(el => el.innerHTML = '<img src="img/v.png">');
+    Array.from(document.getElementsByClassName("adad")).forEach(el => el.innerHTML = '<img src="img/vv.png">');
+    Array.from(document.getElementsByClassName("adadad")).forEach(el => el.innerHTML = '<img src="img/vvv.png">');
     Array.from(document.getElementsByClassName("b")).forEach(el => el.innerHTML = '<img src="img/b.png">');
     Array.from(document.getElementsByClassName("bb")).forEach(el => el.innerHTML = '<img src="img/bb.png">');
     Array.from(document.getElementsByClassName("d")).forEach(el => el.innerHTML = '<img src="img/d.png">');
