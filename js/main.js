@@ -41,29 +41,30 @@ let int_ = document.getElementById("int"),
     concentrating = false,
     chosen_skill = "",
     chosen_spell = "";
-const ATK_BASE = 1,
-      ATK_RNG = "Short",
+const RANGES = ["Engaged", "Short", "Medium", "Long", "Extreme"],
+      ATK_BASE = 1,
+      ATK_RNG = 1,
       ATK_CONC = false,
       AUG_BASE = 2,
-      AUG_RNG = "Engaged",
+      AUG_RNG = 0,
       AUG_CONC = true,
       BAR_BASE = 1,
-      BAR_RNG = "Engaged",
+      BAR_RNG = 0,
       BAR_CONC = true,
       CON_BASE = 1,
-      CON_RNG = "Engaged",
+      CON_RNG = 0,
       CON_CONC = true,
       CUR_BASE = 2,
-      CUR_RNG = "Short",
+      CUR_RNG = 1,
       CUR_CONC = true,
       DIS_BASE = 3,
-      DIS_RNG = "Short",
+      DIS_RNG = 1,
       DIS_CONC = false,
       HEA_BASE = 1,
-      HEA_RNG = "Engaged",
+      HEA_RNG = 0,
       HEA_CONC = false,
       MAS_BASE = 1,
-      MAS_RNG = "Short/Engaged",
+      MAS_RNG = 1,
       MAS_CONC = true,
       PRE_BASE = 2,
       PRE_RNG = "",
@@ -75,6 +76,12 @@ const ATK_BASE = 1,
       UTI_RNG = "",
       UTI_CONC = false;
 
+function showMaskCreature(b) {
+    if (!b)
+        Array.from(document.getElementsByClassName("target")).forEach(el => el.classList.add("d-none"));
+    else
+        Array.from(document.getElementsByClassName("target")).forEach(el => el.classList.remove("d-none"));
+}
 function showType(type) {
     types.forEach(div => div.classList.add("d-none"));
     type.classList.remove("d-none");
@@ -153,20 +160,22 @@ function showSpell(spell) {
     generateSpell();
 }
 
-function multiCheck(sp, type, num) {
-    let checked = false;
-    for (i = num; i > 0; i--) {
-        let el = sp + "_" + type + i + "_use";
-        document.getElementById(el).disabled = false;
-        if (checked) {
-            document.getElementById(el).checked = true;
-            document.getElementById(el).disabled = true;
-            document.getElementById(el).parentElement.classList.add("active");
-            
-        }
-        if (document.getElementById(el).checked)
-            checked = true;
-    }
+function rangeCheck(spellType) {
+    let val = 0;
+    Array.from(document.getElementsByName(spellType + "_rng")).forEach(el => {
+        if (el.checked)
+            val = el.value;
+    });
+    return parseInt(val);
+}
+
+function sizeCheck(spellType) {
+    let val = 0;
+    Array.from(document.getElementsByName(spellType + "_size")).forEach(el => {
+        if (el.checked)
+            val = el.value;
+    });
+    return parseInt(val);
 }
 
 function generateSpell() {
@@ -182,8 +191,11 @@ function generateSpell() {
         spell_name = "",
         qualities = "",
         range = "",
+        selected_range = 0,
+        range_difference = 0,
         other = "",
         sil = -1,
+        size_difference = 0,
         spell_string = "",
         concentration = false;
     if (int_.value != "")
@@ -218,7 +230,9 @@ function generateSpell() {
     Array.from(document.getElementsByClassName("knl")).forEach(el => el.innerHTML = knl);
     switch (chosen_spell) {
         case "attack":
-            range = ATK_BASE;
+            selected_range = rangeCheck("atk");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - ATK_RNG);
             difficulty = ATK_BASE;
             concentration = ATK_CONC;
             switch (chosen_skill) {
@@ -237,14 +251,14 @@ function generateSpell() {
                 default:
                     break;
             }
+            if (document.getElementById("atk_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("atk_blast_use").checked) {
                 qualities += "Blast " + knl + "; ";
                 if(!document.getElementById("atk_blast_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("atk_close_use").checked) {
-                range = "Engaged";
-                if (!document.getElementById("atk_close_free").checked)
                     difficulty++;
             }
             if (document.getElementById("atk_dead_use").checked) {
@@ -287,22 +301,6 @@ function generateSpell() {
                 if (!document.getElementById("atk_nl_free").checked)
                     difficulty++;
             }
-            multiCheck("atk", "rng", 3);
-            if (document.getElementById("atk_rng1_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("atk_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("atk_rng2_use").checked) {
-                range = "Long";
-                if (!document.getElementById("atk_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("atk_rng3_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("atk_rng3_free").checked)
-                    difficulty++;
-            }
             if (document.getElementById("atk_des_use").checked) {
                 qualities += "Sunder; Pierce " + knl + "; ";
                 if (!document.getElementById("atk_des_free").checked)
@@ -321,10 +319,17 @@ function generateSpell() {
             }
             break;
         case "augment":
-            range = AUG_RNG;
+            selected_range = rangeCheck("aug");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - AUG_RNG);
             difficulty = AUG_BASE;
             concentration = AUG_CONC;
             other += "Target increases the ability of any skill checks by one. ";
+            if (document.getElementById("aug_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("aug_dh_use").checked) {
                 other += "Target increases wound threshold by " + knl + ". ";
                 if (!document.getElementById("aug_dh_free").checked)
@@ -340,27 +345,6 @@ function generateSpell() {
                 if (!document.getElementById("aug_pf_free").checked)
                     difficulty++;
             }
-            multiCheck("aug", "rng", 4);
-            if (document.getElementById("aug_rng1_use").checked) {
-                range = "Short";
-                if (!document.getElementById("aug_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("aug_rng2_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("aug_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("aug_rng3_use").checked) {
-                range = "Long";
-                if (!document.getElementById("aug_rng3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("aug_rng4_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("aug_rng4_free").checked)
-                    difficulty++;
-            }
             if (document.getElementById("aug_swft_use").checked) {
                 other += "Target ignores effects of difficult terrain and cannot be immobilized. ";
                 if (!document.getElementById("aug_swft_free").checked)
@@ -373,9 +357,16 @@ function generateSpell() {
             }
             break;
         case "barrier":
-            range = BAR_RNG;
+            selected_range = rangeCheck("bar");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - BAR_RNG);
             concentration = BAR_CONC;
             difficulty = BAR_BASE;
+            if (document.getElementById("bar_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("bar_emp_use").checked) {
                 other += "Reduce incoming damage by one, plus one for every <span class='s'></span>. ";
                 if (!document.getElementById("bar_emp_free").checked)
@@ -385,27 +376,6 @@ function generateSpell() {
             if (document.getElementById("bar_at_use").checked) {
                 other += "Affects an additional target within range. May spend each <span class='ad'></span> to affect an additional target. ";
                 if (!document.getElementById("bar_at_free").checked)
-                    difficulty++;
-            }
-            multiCheck("bar", "rng", 4);
-            if (document.getElementById("bar_rng1_use").checked) {
-                range = "Short";
-                if (!document.getElementById("bar_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("bar_rng2_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("bar_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("bar_rng3_use").checked) {
-                range = "Long";
-                if (!document.getElementById("bar_rng3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("bar_rng4_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("bar_rng4_free").checked)
                     difficulty++;
             }
             if (document.getElementById("bar_def_use").checked) {
@@ -425,10 +395,17 @@ function generateSpell() {
             }
             break;
         case "conjure":
-            range = CON_RNG;
+            selected_range = rangeCheck("con");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - CON_RNG);
             concentration = CON_CONC;
             difficulty = CON_BASE;
             other = "Summons a simple tool, one-handed melee weapon, or minion (silhouette 1). "
+            if (document.getElementById("con_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("con_med_use").checked) {
                 other = "Summons a complicated tool with moving parts, a two-handed melee weapon, or rival (silhouette 1). ";
                 if (!document.getElementById("con_med_free").checked)
@@ -444,27 +421,6 @@ function generateSpell() {
                 if (!document.getElementById("con_as_free").checked)
                     difficulty++;
             }
-            multiCheck("con", "rng", 4);
-            if (document.getElementById("con_rng1_use").checked) {
-                range = "Short";
-                if (!document.getElementById("con_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("con_rng2_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("con_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("con_rng3_use").checked) {
-                range = "Long";
-                if (!document.getElementById("con_rng3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("con_rng4_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("con_rng4_free").checked)
-                    difficulty++;
-            }
             if (document.getElementById("con_sa_use").checked) {
                 other += "Creature summoned is friendly and obeys caster's commands. "
                 if (!document.getElementById("con_sa_free").checked)
@@ -473,9 +429,16 @@ function generateSpell() {
             break;
         case "curse":
             difficulty = CUR_BASE;
-            range = CUR_RNG;
+            selected_range = rangeCheck("cur");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - CUR_RNG);
             concentration = CON_CONC;
             other = "Target decreases the ability of any skill checks made by one. ";
+            if (document.getElementById("cur_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("cur_ene_use").checked) {
                 other += "If target suffers strain, they suffer 1 additional strain. "
                 if (!document.getElementById("cur_ene_free").checked)
@@ -484,22 +447,6 @@ function generateSpell() {
             if (document.getElementById("cur_mis_use").checked) {
                 other += "When target makes a check, change one <span class='sb'></span> to a face displaying a <span class='f'></span>. "
                 if (!document.getElementById("cur_mis_free").checked)
-                    difficulty++;
-            }
-            multiCheck("cur", "rng", 3);
-            if (document.getElementById("cur_rng1_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("cur_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("cur_rng2_use").checked) {
-                range = "Long";
-                if (!document.getElementById("cur_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("cur_rng3_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("cur_rng3_free").checked)
                     difficulty++;
             }
             if (document.getElementById("cur_at_use").checked) {
@@ -525,25 +472,16 @@ function generateSpell() {
             break;
         case "dispel":
             difficulty = DIS_BASE;
-            range = DIS_RNG;
+            selected_range = rangeCheck("dis");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - DIS_RNG);
             concentration = CON_CONC;
             other = "All magical effects the target is under end immediately. "
-            multiCheck("dis", "rng", 3);
-            if (document.getElementById("dis_rng1_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("dis_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("dis_rng2_use").checked) {
-                range = "Long";
-                if (!document.getElementById("dis_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("dis_rng3_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("dis_rng3_free").checked)
-                    difficulty++;
-            }
+            if (document.getElementById("dis_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("dis_at_use").checked) {
                 other += "Affects an additional target within range. May spend each <span class='ad'></span> to affect an additional target. ";
                 if (!document.getElementById("dis_at_free").checked)
@@ -552,33 +490,19 @@ function generateSpell() {
             break;
         case "heal":
             difficulty = HEA_BASE;
-            range = HEA_RNG;
+            selected_range = rangeCheck("hea");
+            range = RANGES[selected_range];
+            range_difference = Math.abs(selected_range - HEA_RNG);
             concentration = HEA_CONC;
             other = "Target recovers 1 wound per uncanceled <span class='s'></span> and 1 strain per uncanceled <span class='ad'></span>. ";
+            if (document.getElementById("hea_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
             if (document.getElementById("hea_at_use").checked) {
                 other += "Affects an additional target within range. May spend each <span class='ad'></span> to affect an additional target. ";
                 if (!document.getElementById("hea_at_free").checked)
-                    difficulty++;
-            }
-            multiCheck("hea", "rng", 4);
-            if (document.getElementById("hea_rng1_use").checked) {
-                range = "Short";
-                if (!document.getElementById("hea_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("hea_rng2_use").checked) {
-                range = "Medium";
-                if (!document.getElementById("hea_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("hea_rng3_use").checked) {
-                range = "Long";
-                if (!document.getElementById("hea_rng3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("hea_rng4_use").checked) {
-                range = "Extreme";
-                if (!document.getElementById("hea_rng4_free").checked)
                     difficulty++;
             }
             if (document.getElementById("hea_res_use").checked) {
@@ -597,36 +521,35 @@ function generateSpell() {
                     difficulty += 2;
             }
             if (document.getElementById("hea_rez_use").checked) {
-                other += "You may target a character who died during this encounter. If successful, target is restored to life with wounds equal to their wound threshold. If failed, no other attempts may be made to resurrect the target. ";
+                other = "You may target a character who died during this encounter. If successful, target is restored to life with wounds equal to their wound threshold. If failed, no other attempts may be made to resurrect the target. ";
                 if (!document.getElementById("hea_rez_free").checked)
                     difficulty += 4;
             }
             break;
         case "mask":
+            let target_self = document.getElementById("mas_self_true").checked;
             difficulty = MAS_BASE;
-            range = MAS_RNG;
+            selected_range = rangeCheck("mas");
+            range = RANGES[selected_range];
+            if (target_self)
+                range_difference = Math.abs(selected_range - (MAS_RNG - 1));
+            else
+                range_difference = Math.abs(selected_range - MAS_RNG);
+            size_difference = sizeCheck("mas") - 1;
             concentration = MAS_CONC;
-            other = "Create an illusion of an object or creature (Silhouette 1 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 1 or smaller). ";
-            multiCheck("mas", "size", 4);
-            if (document.getElementById("mas_size1_use").checked) {
-                other = "Create an illusion of an object or creature (Silhouette 2 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 2 or smaller). ";
-                if (!document.getElementById("mas_size1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_size2_use").checked) {
-                other = "Create an illusion of an object or creature (Silhouette 3 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 3 or smaller). ";
-                if (!document.getElementById("mas_size2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_size3_use").checked) {
-                other = "Create an illusion of an object or creature (Silhouette 4 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 4 or smaller). ";
-                if (!document.getElementById("mas_size3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_size4_use").checked) {
-                other = "Create an illusion of an object or creature (Silhouette 5 or smaller) or change the appearance of the caster or a target you are engaged with (Silhouette 5 or smaller). ";
-                if (!document.getElementById("mas_size4_free").checked)
-                    difficulty++;
+            other = "Create an illusion of an object/creature or change the appearance of the caster or another target. ";
+            sil = sizeCheck("mas");
+            if (document.getElementById("mas_rng_free").checked) {
+                if (range_difference > 0)
+                    difficulty += (range_difference - 1);
+            } else
+                difficulty += range_difference;
+            if (document.getElementById("mas_size_free").checked) {
+                if (size_difference > 0)
+                    difficulty += (size_difference - 1);
+            } else {
+                if (size_difference > 0)
+                    difficulty += size_difference;
             }
             if (document.getElementById("mas_blur_use").checked) {
                 other += "An illusion on a character causes any attacks made against them to add <span class='t'></span> to the results. ";
@@ -641,27 +564,6 @@ function generateSpell() {
             if (document.getElementById("mas_at_use").checked) {
                 other += "Affects an additional target or creates another illusion within range. May spend each <span class='adad'></span> to affect an additional target or create an additional illusion. ";
                 if (!document.getElementById("mas_at_free").checked)
-                    difficulty++;
-            }
-            multiCheck("mas", "rng", 4);
-            if (document.getElementById("mas_rng1_use").checked) {
-                range = "Medium / Short";
-                if (!document.getElementById("mas_rng1_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_rng2_use").checked) {
-                range = "Long / Medium";
-                if (!document.getElementById("mas_rng2_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_rng3_use").checked) {
-                range = "Extreme / Long";
-                if (!document.getElementById("mas_rng3_free").checked)
-                    difficulty++;
-            }
-            if (document.getElementById("mas_rng4_use").checked) {
-                range = "Extreme / Extreme";
-                if (!document.getElementById("mas_rng4_free").checked)
                     difficulty++;
             }
             if (document.getElementById("mas_rea_use").checked) {
@@ -717,33 +619,15 @@ function generateSpell() {
             difficulty = TRA_BASE;
             range = TRA_RNG;
             concentration = TRA_CONC;
-            sil = 0;
+            sil = sizeCheck("tra");
+            size_difference = sil;
             other = "Transform into an animal. ";
-            multiCheck("tra", "si", 5);
-            if (document.getElementById("tra_si1_use").checked) {
-                sil++;
-                if (!document.getElementById("tra_si1_free").checked)
-                    difficulty += 1;
-            }
-            if (document.getElementById("tra_si2_use").checked) {
-                sil++;
-                if (!document.getElementById("tra_si2_free").checked)
-                    difficulty += 1;
-            }
-            if (document.getElementById("tra_si3_use").checked) {
-                sil++;
-                if (!document.getElementById("tra_si3_free").checked)
-                    difficulty += 1;
-            }
-            if (document.getElementById("tra_si4_use").checked) {
-                sil++;
-                if (!document.getElementById("tra_si4_free").checked)
-                    difficulty += 1;
-            }
-            if (document.getElementById("tra_si5_use").checked) {
-                sil++;
-                if (!document.getElementById("tra_si5_free").checked)
-                    difficulty += 1;
+            if (document.getElementById("mas_size_free").checked) {
+                if (size_difference > 0)
+                    difficulty += (size_difference - 1);
+            } else {
+                if (size_difference > 0)
+                    difficulty += size_difference;
             }
             if (document.getElementById("tra_cr_use").checked) {
                 other += "Retain your own Intellect and Willpower. ";
@@ -757,7 +641,8 @@ function generateSpell() {
             }
             if (document.getElementById("tra_df_use").checked) {
                 other += "Adopt a dire form of the chosen animal. Increase damage of natural weapons by 3, soak by 1, wound threshold by 6, and silhouette by 1. ";
-                sil++;
+                if (sil < 5)
+                    sil++;
                 if (!document.getElementById("tra_df_free").checked)
                     difficulty += 1;
             }
