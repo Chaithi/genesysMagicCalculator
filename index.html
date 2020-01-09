@@ -62,6 +62,7 @@
           <input type="number" min="1" max="5" step="1" value="1" class="form-control" placeholder="1" id="knl">
         </div>
       </div>
+        
         <h4>Spell Features</h4>
         <div class="form-row">
             <div class="col-6">
@@ -94,12 +95,22 @@
         <div class="form-row">
             <div class="col">
                 <h3>Magic Skill</h3>
-                <div class="btn-group" role="group" aria-label="Magic Skills">
-                  <button type="button" class="btn btn-primary" onclick="showType(arcana)">Arcana</button>
-                  <button type="button" class="btn btn-light" onclick="showType(divine)">Divine</button>
-                  <button type="button" class="btn btn-danger" onclick="showType(primal)">Primal</button>
-                  <button type="button" class="btn btn-dark" onclick="showType(runes)">Runes</button>
-                  <button type="button" class="btn btn-info" onclick="showType(verse)">Verse</button>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons" aria-label="Magic Skills">
+                    <label class="btn btn-primary" onclick="showType(arcana)">
+                        <input type="radio" name="skill" > Arcana
+                    </label>
+                  <label class="btn btn-light" onclick="showType(divine)">
+                    <input type="radio" name="skill" > Divine
+                  </label>
+                  <label class="btn btn-danger" onclick="showType(primal)">
+                      <input type="radio" name="skill" > Primal
+                  </label>
+                  <label class="btn btn-dark" onclick="showType(runes)">
+                      <input type="radio" name="skill" > Runes
+                  </label>
+                  <label class="btn btn-info" onclick="showType(verse)">
+                    <input type="radio" name="skill" > Verse
+                  </label>
                 </div>
             </div>
             <div class="col">
@@ -159,22 +170,35 @@
                 <h4>Attack</h4>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="atk_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm">
+                            <input type="radio" name="atk_rng" id="atk_rng_0" value="0"> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm active">
+                        <input type="radio" name="atk_rng" id="atk_rng_1" value="1" checked> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="atk_rng" id="atk_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="atk_rng" id="atk_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="atk_rng" id="atk_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div>  
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="atk_blast_free"> Free
                     </label>
                     <label class="btn btn-primary btn-sm">
                         <input type="checkbox" id="atk_blast_use"> Add
                     </label>
                     <label><b>Blast</b>: Attack gains Blast <span class="knl"></span>. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="atk_close_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="atk_close_use"> Add
-                    </label>
-                    <label><b>Close Combat</b>: May select a target you are Engaged with. +<span class="d"></span>
                     </label>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
@@ -259,36 +283,6 @@
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="atk_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="atk_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="atk_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="atk_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="atk_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="atk_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
                         <input  type="checkbox" id="atk_des_free"> Free
                     </label>
                     <label class="btn btn-primary btn-sm">
@@ -319,7 +313,30 @@
                 </div>
             </div>
             <div class="container d-none" id="augment">
-                <h4>Augment</h4><br />
+                <h4>Augment</h4>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="aug_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm active">
+                            <input type="radio" name="aug_rng" id="aug_rng_0" value="0" checked> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="aug_rng" id="aug_rng_1" value="1"> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="aug_rng" id="aug_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="aug_rng" id="aug_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="aug_rng" id="aug_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div> 
                 <div class="btn-group-toggle divine" data-toggle="buttons">
                     <label class="btn btn-success btn-sm typed">
                         <input class="typed" type="checkbox" id="aug_dh_free"> Free
@@ -352,46 +369,6 @@
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="aug_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="aug_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="aug_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="aug_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="aug_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="aug_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="aug_rng4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="aug_rng4_use"> Add
-                    </label>
-                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="aug_swft_free"> Free
                     </label>
                     <label class="btn btn-primary btn-sm">
@@ -412,7 +389,30 @@
                 </div>
             </div>
             <div class="container d-none" id="barrier">
-                <h4>Barrier</h4><br />
+                <h4>Barrier</h4>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="bar_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm active">
+                            <input type="radio" name="bar_rng" id="bar_rng_0" value="0" checked> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="bar_rng" id="bar_rng_1" value="1"> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="bar_rng" id="bar_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="bar_rng" id="bar_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="bar_rng" id="bar_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div> 
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="bar_at_free"> Free
@@ -421,46 +421,6 @@
                         <input type="checkbox" id="bar_at_use"> Add
                     </label>
                     <label><b>Additional Target</b>: Affects an additional target within range. May spend each <span class="ad"></span> to affect an additional target. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="bar_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="bar_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="bar_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="bar_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="bar_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="bar_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="bar_rng4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="bar_rng4_use"> Add
-                    </label>
-                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
                     </label>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
@@ -505,7 +465,30 @@
                 </div>
             </div>
             <div class="container d-none" id="conjure">
-                <h4>Conjure</h4><br />
+                <h4>Conjure</h4>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm active">
+                            <input type="radio" name="con_rng" id="con_rng_0" value="0" checked> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="con_rng" id="con_rng_1" value="1"> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="con_rng" id="con_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="con_rng" id="con_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="con_rng" id="con_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div> 
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="con_as_free"> Free
@@ -514,56 +497,6 @@
                         <input type="checkbox" id="con_as_use"> Add
                     </label>
                     <label><b>Additional Summon</b>: Summons an additional summon. May summon an additional per <span class="adad"></span>. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="con_med_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="con_med_use"> Add
-                    </label>
-                    <label><b>Medium Summon</b>: Summon a more complicated tool, a two-handed weapon, or rival. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="con_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="con_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="con_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="con_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="con_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="con_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="con_rng4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="con_rng4_use"> Add
-                    </label>
-                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
                     </label>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
@@ -578,6 +511,16 @@
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="con_med_free"> Free
+                    </label>
+                    <label class="btn btn-primary btn-sm">
+                        <input type="checkbox" id="con_med_use"> Add
+                    </label>
+                    <label><b>Medium Summon</b>: Summon a more complicated tool, a two-handed weapon, or rival. +<span class="d"></span>
+                    </label>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="con_grn_free"> Free
                     </label>
                     <label class="btn btn-primary btn-sm">
@@ -588,7 +531,30 @@
                 </div>
             </div>
             <div class="container d-none" id="curse">
-                <h4>Curse</h4><br />
+                <h4>Curse</h4>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="cur_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm">
+                            <input type="radio" name="cur_rng" id="cur_rng_0" value="0"> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm active">
+                        <input type="radio" name="cur_rng" id="cur_rng_1" value="1" checked> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="cur_rng" id="cur_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="cur_rng" id="cur_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="cur_rng" id="cur_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div>  
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="cur_ene_free"> Free
@@ -607,36 +573,6 @@
                         <input type="checkbox" id="cur_mis_use"> Add
                     </label>
                     <label><b>Misfortune</b>: When target makes a check, change one <span class='sb'></span> to a face displaying a <span class='f'></span>. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="cur_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="cur_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="cur_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="cur_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="cur_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="cur_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
                     </label>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
@@ -681,36 +617,29 @@
                 </div>
             </div>
             <div class="container d-none" id="dispel">
-                <h4>Dispel</h4><br />
+                <h4>Dispel</h4>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="dis_rng1_free"> Free
+                        <input type="checkbox" id="dis_rng_free"> Free
                     </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="dis_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Medium. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="dis_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="dis_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Long (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="dis_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="dis_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Extreme (Must also select Range 1 and Range 2). +<span class="d"></span>
-                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm">
+                            <input type="radio" name="dis_rng" id="dis_rng_0" value="0"> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm active">
+                        <input type="radio" name="dis_rng" id="dis_rng_1" value="1" checked> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="dis_rng" id="dis_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="dis_rng" id="dis_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="dis_rng" id="dis_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
@@ -724,47 +653,30 @@
                 </div>
             </div>
             <div class="container d-none" id="heal">
-                <h4>Heal</h4><br />
+                <h4>Heal</h4>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="hea_rng1_free"> Free
+                        <input type="checkbox" id="hea_rng_free"> Free
                     </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="hea_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of the spell to Short. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="hea_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="hea_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of the spell to Medium (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="hea_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="hea_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of the spell to Long (Must also select Range 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="hea_rng4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="hea_rng4_use"> Add
-                    </label>
-                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
-                    </label>
-                </div>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm active">
+                            <input type="radio" name="hea_rng" id="hea_rng_0" value="0" checked> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="hea_rng" id="hea_rng_1" value="1"> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="hea_rng" id="hea_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="hea_rng" id="hea_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="hea_rng" id="hea_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div> 
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="hea_at_free"> Free
@@ -817,8 +729,65 @@
                 </div>
             </div>
             <div class="container d-none" id="mask">
-                <h4>Mask</h4><br />
+                <h4>Mask</h4>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary btn-sm active" onclick="showMaskCreature(true)">
+                        <input type="radio" name="mas_self" id="mas_self_true" value="true"  checked> Target Self/Creature
+                    </label>
+                    <label class="btn btn-primary btn-sm" onclick="showMaskCreature(false)">
+                        <input type="radio" name="mas_self" id="mas_self_false" value="false"> Project Image
+                    </label>
+                </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_rng_free"> Free
+                    </label>
+                    <label><b>Range</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm">
+                            <input type="radio" name="mas_rng" id="mas_rng_0" value="0"> Engaged
+                        </label>
+                      <label class="btn btn-primary btn-sm active">
+                        <input type="radio" name="mas_rng" id="mas_rng_1" value="1" checked> Short
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_rng" id="mas_rng_2" value="2"> Medium
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_rng" id="mas_rng_3" value="3"> Long
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_rng" id="mas_rng_4" value="4"> Extreme
+                      </label>
+                    </div>
+                </div>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-success btn-sm">
+                        <input type="checkbox" id="mas_size_free"> Free
+                    </label>
+                    <label><b>Silhouette</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm">
+                            <input type="radio" name="mas_size" id="mas_size_0" value="0"> 0
+                        </label>
+                      <label class="btn btn-primary btn-sm active">
+                        <input type="radio" name="mas_size" id="mas_size_1" value="1" checked> 1
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_size" id="mas_size_2" value="2"> 2
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_size" id="mas_size_3" value="3"> 3
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_size" id="mas_size_4" value="4"> 4
+                      </label>
+                       <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="mas_size" id="mas_size_5" value="5"> 5
+                      </label>
+                    </div>
+                </div>
+                <div class="btn-group-toggle target" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="mas_blur_free"> Free
                     </label>
@@ -828,7 +797,7 @@
                     <label><b>Blur</b>: An illusion on a character causes any attacks made against them to add <span class="t"></span> to the results. +<span class="d"></span>
                     </label>
                 </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
+                <div class="btn-group-toggle target" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="mas_mi_free"> Free
                     </label>
@@ -848,86 +817,7 @@
                     <label><b>Additional Illusion</b>: Affects an additional target or creates an additional illusion within range. May spend each <span class="adad"></span> to affect an additional target or create another illusion. +<span class="d"></span>
                     </label>
                 </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_rng1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_rng1_use"> Add
-                    </label>
-                    <label><b>Range 1</b>: Increase range of illusions to Medium and targeted creatures to Short. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_rng2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_rng2_use"> Add
-                    </label>
-                    <label><b>Range 2</b>: Increase range of illusions to Long and targeted creatures to Medium (Must also select Range 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_rng3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_rng3_use"> Add
-                    </label>
-                    <label><b>Range 3</b>: Increase range of illusions to Extreme and targeted creatures to Long (Must also select Range 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_rng4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_rng4_use"> Add
-                    </label>
-                    <label><b>Range 4</b>: Increase range of the spell to Extreme (Must also select Range 1, 2, and 3). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_size1_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_size1_use"> Add
-                    </label>
-                    <label><b>Size 1</b>: May affect creatures and create illusions of Silhouette 2. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_size2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_size2_use"> Add
-                    </label>
-                    <label><b>Size 2</b>: May affect creatures and create illusions of Silhouette 3. (Must also select Size 1). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_size3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_size3_use"> Add
-                    </label>
-                    <label><b>Size 3</b>: May affect creatures and create illusions of Silhouette 4. (Must also select Size 1 and 2). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="mas_size4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="mas_size4_use"> Add
-                    </label>
-                    <label><b>Size 4</b>: May affect creatures and create illusions of Silhouette 5. (Must also select Size 1, 2, and 3). +<span class="d"></span>
-                    </label>
-                </div>
+                
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="mas_rea_free"> Free
@@ -948,7 +838,7 @@
                     <label><b>Terror</b>: Those who spot the illusion must make a <b>Hard</b> (<span class="ddd"></span>) Discipline check. Suffer 2 strain per <span class="t"></span>. If failed, they are unable to approach the illusion. +<span class="dd"></span>
                     </label>
                 </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
+                <div class="btn-group-toggle target" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
                         <input type="checkbox" id="mas_inv_free"> Free
                     </label>
@@ -960,7 +850,7 @@
                 </div>
             </div>
             <div class="container d-none" id="predict">
-                <h4>Predict</h4><br />
+                <h4>Predict</h4>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary btn-sm">
                         <input type="checkbox" id="pre_qr_use"> Add
@@ -1020,56 +910,32 @@
                 </div>
             </div>
             <div class="container d-none" id="transform">
-                <h4>Transform</h4><br />
+                <h4>Transform</h4>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="tra_si1_free"> Free
+                        <input type="checkbox" id="tra_size_free"> Free
                     </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="tra_si1_use"> Add
-                    </label>
-                    <label><b>Silhouette Increase 1</b>: Transform into an animal of Silhouette 1. +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="tra_si2_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="tra_si2_use"> Add
-                    </label>
-                    <label><b>Silhouette Increase 2</b>: Transform into an animal of Silhouette 2 (Rank 1 required). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="tra_si3_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="tra_si3_use"> Add
-                    </label>
-                    <label><b>Silhouette Increase 3</b>: Transform into an animal of Silhouette 3 (Rank 1 and 2 required). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="tra_si4_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="tra_si4_use"> Add
-                    </label>
-                    <label><b>Silhouette Increase 4</b>: Transform into an animal of Silhouette 4 (Rank 1, 2 and 3 required). +<span class="d"></span>
-                    </label>
-                </div>
-                <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success btn-sm">
-                        <input type="checkbox" id="tra_si5_free"> Free
-                    </label>
-                    <label class="btn btn-primary btn-sm">
-                        <input type="checkbox" id="tra_si5_use"> Add
-                    </label>
-                    <label><b>Silhouette Increase 5</b>: Transform into an animal of Silhouette 5 (Rank 1, 2, 3, and 4 required). +<span class="d"></span>
-                    </label>
+                    <label><b>Silhouette</b>: </label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-primary btn-sm active">
+                            <input type="radio" name="tra_size" id="tra_size_0" value="0" checked> 0
+                        </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="tra_size" id="tra_size_1" value="1"> 1
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="tra_size" id="tra_size_2" value="2"> 2
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="tra_size" id="tra_size_3" value="3"> 3
+                      </label>
+                      <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="tra_size" id="tra_size_4" value="4"> 4
+                      </label>
+                       <label class="btn btn-primary btn-sm">
+                        <input type="radio" name="tra_size" id="tra_size_5" value="5"> 5
+                      </label>
+                    </div>
                 </div>
                 <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-success btn-sm">
