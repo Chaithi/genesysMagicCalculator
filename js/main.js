@@ -78,6 +78,37 @@ const RANGES = ["Engaged", "Short", "Medium", "Long", "Extreme"],
     UTI_RNG = "",
     UTI_CONC = false;
 
+// Values related to the localstorage key for saving and loading information.
+const localStoreNameValue = "genesysMagicCalculator";
+let storeValue = JSON.parse( localStorage.getItem(localStoreNameValue) );
+
+// Load all characteristics if they were previously stored.
+loadCharacteristics(storeValue);
+
+// Saves the values set in Characteristics
+// IDs of values should be:  int, wil, cun, prs, knl, which are pre-set in the variables.
+function saveCharacteristics() {
+    json_data = { 
+        "int" : parseInt(int_.value),
+        "cun" : parseInt(cun_.value),
+        "wil" : parseInt(wil_.value),
+        "prs" : parseInt(prs_.value),
+        "knl" : parseInt(knl_.value),
+    };
+    localStorage.setItem( localStoreNameValue, JSON.stringify(json_data));
+}
+
+// Loads all values from local storage and puts them in the appropriate locations.
+function loadCharacteristics() {
+    if (storeValue != "") {
+        int_.value = storeValue.int;
+        cun_.value = storeValue.cun;
+        wil_.value = storeValue.wil;
+        prs_.value = storeValue.prs;
+        knl_.value = storeValue.knl;
+    }
+}
+
 // Shows or masks the creature features based on whether "Target Self/Creature" is selected for the Arcana > Mask spell list.
 // boolean b Whether the mask is being enabled or disabled.
 function showMaskCreature(b) {
