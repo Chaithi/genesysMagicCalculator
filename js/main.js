@@ -9,6 +9,7 @@
  * @version 0.2a
  */
 
+// Set all document element ID references and set variables.
 let int_ = document.getElementById("int"),
     cun_ = document.getElementById("cun"),
     wil_ = document.getElementById("wil"),
@@ -33,55 +34,62 @@ let int_ = document.getElementById("int"),
     diff_mod_ = document.getElementById("diff_mod"),
     imp_atk_ = document.getElementById("imp_atk"),
     spell_name_ = document.getElementById("name"),
+    spellDiv = document.getElementById("spell"),
+    concDiv = document.getElementById("concentrating"),
     types = [arcana, divine, primal, runes, verse],
     spellTypes = ["arcana", "divine", "primal", "runes", "verse"],
     spells = [attack, augment, barrier, conjure, curse, dispel, heal, mask, predict, transform, utility],
-    spellDiv = document.getElementById("spell"),
-    concDiv = document.getElementById("concentrating"),
     concentrating = false,
     chosen_skill = "",
     chosen_spell = "";
+// Set all const values that will be used throughout the settings.
 const RANGES = ["Engaged", "Short", "Medium", "Long", "Extreme"],
-      ATK_BASE = 1,
-      ATK_RNG = 1,
-      ATK_CONC = false,
-      AUG_BASE = 2,
-      AUG_RNG = 0,
-      AUG_CONC = true,
-      BAR_BASE = 1,
-      BAR_RNG = 0,
-      BAR_CONC = true,
-      CON_BASE = 1,
-      CON_RNG = 0,
-      CON_CONC = true,
-      CUR_BASE = 2,
-      CUR_RNG = 1,
-      CUR_CONC = true,
-      DIS_BASE = 3,
-      DIS_RNG = 1,
-      DIS_CONC = false,
-      HEA_BASE = 1,
-      HEA_RNG = 0,
-      HEA_CONC = false,
-      MAS_BASE = 1,
-      MAS_RNG = 1,
-      MAS_CONC = true,
-      PRE_BASE = 2,
-      PRE_RNG = "",
-      PRE_CONC = false,
-      TRA_BASE = 2,
-      TRA_RNG = "",
-      TRA_CONC = true,
-      UTI_BASE = 1,
-      UTI_RNG = "",
-      UTI_CONC = false;
+    ATK_BASE = 1,
+    ATK_RNG = 1,
+    ATK_CONC = false,
+    AUG_BASE = 2,
+    AUG_RNG = 0,
+    AUG_CONC = true,
+    BAR_BASE = 1,
+    BAR_RNG = 0,
+    BAR_CONC = true,
+    CON_BASE = 1,
+    CON_RNG = 0,
+    CON_CONC = true,
+    CUR_BASE = 2,
+    CUR_RNG = 1,
+    CUR_CONC = true,
+    DIS_BASE = 3,
+    DIS_RNG = 1,
+    DIS_CONC = false,
+    HEA_BASE = 1,
+    HEA_RNG = 0,
+    HEA_CONC = false,
+    MAS_BASE = 1,
+    MAS_RNG = 1,
+    MAS_CONC = true,
+    PRE_BASE = 2,
+    PRE_RNG = "",
+    PRE_CONC = false,
+    TRA_BASE = 2,
+    TRA_RNG = "",
+    TRA_CONC = true,
+    UTI_BASE = 1,
+    UTI_RNG = "",
+    UTI_CONC = false;
 
+// Shows or masks the creature features based on whether "Target Self/Creature" is selected for the Arcana > Mask spell list.
+// boolean b Whether the mask is being enabled or disabled.
 function showMaskCreature(b) {
     if (!b)
         Array.from(document.getElementsByClassName("target")).forEach(el => el.classList.add("d-none"));
     else
         Array.from(document.getElementsByClassName("target")).forEach(el => el.classList.remove("d-none"));
 }
+
+// Shows the different types of spell actions available based on skill type.
+// Hides all others by default.
+// string type The type of skill.
 function showType(type) {
     types.forEach(div => div.classList.add("d-none"));
     type.classList.remove("d-none");
@@ -117,6 +125,8 @@ function showType(type) {
     generateSpell();
 }
 
+// Shows the specifica types of spells available based on a selected Spell Type.
+// string spell The spell type to use.
 function showSpell(spell) {
     spells.forEach(div => div.classList.add("d-none"));
     spell.classList.remove("d-none");
@@ -160,6 +170,8 @@ function showSpell(spell) {
     generateSpell();
 }
 
+// Adds what the range check is for a given spell type.
+// string spellType The type of spell being cast.
 function rangeCheck(spellType) {
     let val = 0;
     Array.from(document.getElementsByName(spellType + "_rng")).forEach(el => {
@@ -169,6 +181,8 @@ function rangeCheck(spellType) {
     return parseInt(val);
 }
 
+// Adds what the size check is for a given spell type.
+// string spellType The type of spell being cast.
 function sizeCheck(spellType) {
     let val = 0;
     Array.from(document.getElementsByName(spellType + "_size")).forEach(el => {
@@ -178,6 +192,7 @@ function sizeCheck(spellType) {
     return parseInt(val);
 }
 
+// Generates the spell's information, difficulty, and such based on the provided checked information.
 function generateSpell() {
     let difficulty = 0,
         damage = 0,
@@ -685,6 +700,7 @@ function generateSpell() {
     dice();
 }
 
+// Adds a separate section for a spell that is being concentrated on.
 function concentrate() {
     concDiv.innerHTML = "<h5>Concentrating on:</h5>";
     concDiv.innerHTML += spellDiv.innerHTML;
@@ -692,10 +708,12 @@ function concentrate() {
     concDiv.innerHTML += "<br /><button type='button' class='btn btn-danger' onclick='stopConc()'>Stop Concentrating</button>";
 }
 
+// Removes the concentration for the current spell.
 function stopConc() {
     concDiv.innerHTML = "";
 }
 
+// Generates the dice images to display based on the current classes set for an element.
 function dice() {
     Array.from(document.getElementsByClassName("a")).forEach(el => el.innerHTML = '<img src="img/a.png">');
     Array.from(document.getElementsByClassName("aa")).forEach(el => el.innerHTML = '<img src="img/aa.png">');
@@ -726,6 +744,8 @@ function dice() {
     Array.from(document.getElementsByClassName("tr")).forEach(el => el.innerHTML = '<img src="img/tr.png">');
 }
 
+// Determines the check type based off of a provided value.
+// int num The integer value of the check difficulty.
 function checkDifficulty(num) {
     if (num < 0)
         num = 0;
