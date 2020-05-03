@@ -1,16 +1,3 @@
-body {
-  padding-top: 60px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-@media (max-width: 979px) {
-  body {
-    padding-top: 60px;
-    padding-left: 10px;
-  	padding-right: 10px;
-  }
-}
-
 .save-button {
 	position: absolute;
 	left: 200px;
