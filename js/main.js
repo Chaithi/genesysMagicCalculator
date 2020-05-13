@@ -99,8 +99,8 @@ function saveCharacteristics() {
 }
 
 // Loads all values from local storage and puts them in the appropriate locations.
-function loadCharacteristics() {
-    if (storeValue != "") {
+function loadCharacteristics(storeValue) {
+    if (storeValue !== "" && storeValue !== null) {
         int_.value = storeValue.int;
         cun_.value = storeValue.cun;
         wil_.value = storeValue.wil;
